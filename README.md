@@ -3,8 +3,8 @@ This is a migration approach from Fernando Cejas repository [Android-CleanArchit
 
 The purpose of this, is not other than experimenting with the library [Koin][2]
 
-[1] :       https://github.com/android10/Android-CleanArchitecture-Kotlin
-[2] :       https://insert-koin.io/docs/2.0/getting-started/android/
+[1]:       https://github.com/android10/Android-CleanArchitecture-Kotlin
+[2]:       https://insert-koin.io/docs/2.0/getting-started/android/
 
 <a href="https://www.buymeacoffee.com/DSbMElGNU" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
