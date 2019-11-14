@@ -72,23 +72,24 @@ dependencies {
 
   //Compile time dependencies
   kapt applicationDependencies.archComponentsCompiler
-  kapt applicationDependencies.daggerCompiler
   compileOnly applicationDependencies.javaxAnnotation
   compileOnly applicationDependencies.javaxInject
 
   //Application dependencies
   implementation applicationDependencies.kotlin
   implementation applicationDependencies.kotlinCoroutines
-  implementation applicationDependencies.kotlinCoroutinesAndroid
   implementation applicationDependencies.appCompat
-  implementation applicationDependencies.constraintLayout
-  implementation applicationDependencies.archComponents
-  implementation applicationDependencies.cardView
   implementation applicationDependencies.recyclerView
-  implementation applicationDependencies.design
+  implementation applicationDependencies.constraintLayout
   implementation applicationDependencies.androidAnnotations
+  implementation applicationDependencies.archViewModel
+  implementation applicationDependencies.archComponents
+  implementation applicationDependencies.archComponentsCompiler
   implementation applicationDependencies.glide
-  implementation applicationDependencies.dagger
+  implementation applicationDependencies.koinAndroid
+  implementation applicationDependencies.koinCore
+  implementation applicationDependencies.koinViewmodel
+  implementation applicationDependencies.koinTest
   implementation applicationDependencies.retrofit
   implementation applicationDependencies.okhttpLoggingInterceptor
 
@@ -111,6 +112,7 @@ dependencies {
   debugImplementation developmentDependencies.leakCanary
   releaseImplementation developmentDependencies.leakCanaryNoop
   testImplementation developmentDependencies.leakCanaryNoop
+  implementation 'com.android.support:design:28.0.0'
 }
 
 kotlin {
