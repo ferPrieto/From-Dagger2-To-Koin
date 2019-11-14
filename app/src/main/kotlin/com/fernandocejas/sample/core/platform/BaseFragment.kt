@@ -16,18 +16,17 @@
 package com.fernandocejas.sample.core.platform
 
 import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.fernandocejas.sample.AndroidApplication
 import com.fernandocejas.sample.R.color
 import com.fernandocejas.sample.core.extension.appContext
 import com.fernandocejas.sample.core.extension.viewContainer
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
@@ -40,11 +39,12 @@ abstract class BaseFragment : Fragment() {
 
     abstract fun layoutId(): Int
 
-    val appComponent: ApplicationComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
-        (activity?.application as AndroidApplication).appComponent
-    }
+    /*  val appComponent: ApplicationComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
+          (activity?.application as AndroidApplication).appComponent
+      }*/
 
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
             inflater.inflate(layoutId(), container, false)

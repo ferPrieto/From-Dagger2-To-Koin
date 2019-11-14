@@ -15,12 +15,13 @@
  */
 package com.fernandocejas.sample.features.movies
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import com.fernandocejas.sample.features.movies.GetMovieDetails.Params
 import com.fernandocejas.sample.core.platform.BaseViewModel
 import javax.inject.Inject
 
-class MovieDetailsViewModel(private val getMovieDetails: GetMovieDetails,
+class MovieDetailsViewModel
+@Inject constructor(private val getMovieDetails: GetMovieDetails,
                     private val playMovie: PlayMovie) : BaseViewModel() {
 
     var movieDetails: MutableLiveData<MovieDetailsView> = MutableLiveData()

@@ -71,13 +71,14 @@ dependencies {
   def developmentDependencies = rootProject.ext.development
 
   //Compile time dependencies
-  kapt applicationDependencies.archComponentsCompiler
+  annotationProcessor applicationDependencies.archComponentsCompiler
   compileOnly applicationDependencies.javaxAnnotation
   compileOnly applicationDependencies.javaxInject
 
   //Application dependencies
   implementation applicationDependencies.kotlin
   implementation applicationDependencies.kotlinCoroutines
+  implementation applicationDependencies.kotlinCoroutinesAndroid
   implementation applicationDependencies.appCompat
   implementation applicationDependencies.recyclerView
   implementation applicationDependencies.constraintLayout
@@ -112,7 +113,7 @@ dependencies {
   debugImplementation developmentDependencies.leakCanary
   releaseImplementation developmentDependencies.leakCanaryNoop
   testImplementation developmentDependencies.leakCanaryNoop
-  implementation 'com.android.support:design:28.0.0'
+  implementation 'com.google.android.material:material:1.1.0-beta02'
 }
 
 kotlin {

@@ -36,5 +36,4 @@ val networkModule = module {
     single { MoviesRepository.Network(get(), get()) }
 
     single { NetworkHandler(get()) }
-
 }

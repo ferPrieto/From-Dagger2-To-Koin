@@ -17,7 +17,6 @@ package com.fernandocejas.sample.core.platform
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.OneShotPreDrawListener.add
 import com.fernandocejas.sample.R.id
 import com.fernandocejas.sample.R.layout
 import kotlinx.android.synthetic.main.toolbar.*
@@ -34,7 +33,7 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(layout.activity_layout)
         setSupportActionBar(toolbar)
-        addFragment(savedInstanceState)
+        //addFragment(savedInstanceState)
     }
 
     override fun onBackPressed() {
@@ -43,9 +42,9 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    private fun addFragment(savedInstanceState: Bundle?) =
-            savedInstanceState ?: supportFragmentManager.inTransaction { add(
-                    id.fragmentContainer, fragment()) }
+    /*private fun addFragment(savedInstanceState: Bundle?) =
+            savedInstanceState ?: supportFragmentManager.beginTransaction().add(
+                    id.fragmentContainer, fragment())*/
 
     abstract fun fragment(): BaseFragment
 }

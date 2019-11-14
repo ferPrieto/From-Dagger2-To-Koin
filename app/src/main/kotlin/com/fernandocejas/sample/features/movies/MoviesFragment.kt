@@ -16,9 +16,9 @@
 package com.fernandocejas.sample.features.movies
 
 import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
+import androidx.annotation.StringRes
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fernandocejas.sample.core.platform.BaseFragment
 import com.fernandocejas.sample.R
 import com.fernandocejas.sample.features.movies.MovieFailure.ListNotAvailable
@@ -28,11 +28,11 @@ import com.fernandocejas.sample.core.exception.Failure.ServerError
 import com.fernandocejas.sample.core.extension.failure
 import com.fernandocejas.sample.core.extension.invisible
 import com.fernandocejas.sample.core.extension.observe
-import com.fernandocejas.sample.core.extension.viewModel
 import com.fernandocejas.sample.core.extension.visible
 import com.fernandocejas.sample.core.navigation.Navigator
 import kotlinx.android.synthetic.main.fragment_movies.emptyView
 import kotlinx.android.synthetic.main.fragment_movies.movieList
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import javax.inject.Inject
 
 class MoviesFragment : BaseFragment() {
@@ -46,7 +46,6 @@ class MoviesFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        appComponent.inject(this)
 
         moviesViewModel = viewModel(viewModelFactory) {
             observe(movies, ::renderMoviesList)
@@ -59,7 +58,6 @@ class MoviesFragment : BaseFragment() {
         initializeView()
         loadMoviesList()
     }
-
 
     private fun initializeView() {
         movieList.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
