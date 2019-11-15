@@ -1,10 +1,31 @@
 # Android - Clean Architecture - From Dagger2 to Koin
-This is a migration approach from Fernando Cejas repository [Android-CleanArchitecture-Kotlin][1]
 
-The purpose of this, is not other than experimenting with the library [Koin][2]
+This is a Dagger to [Koin][1] migration approach from Fernando Cejas's repository [Android-CleanArchitecture-Kotlin][2]
 
-[1]:       https://github.com/android10/Android-CleanArchitecture-Kotlin
-[2]:       https://insert-koin.io/docs/2.0/getting-started/android/
+[1]:       https://insert-koin.io/docs/2.0/getting-started/android/
+[2]:       https://github.com/android10/Android-CleanArchitecture-Kotlin
+
+## Android 3 Layers Architecture
+
+Based on these three layers, I have created three modules for `Presentation`, `Domain` and `Data`. Also an additional `AppModule`
+![https://fernandocejas.com/2018/05/07/architecting-android-reloaded/](https://github.com/android10/Sample-Data/blob/master/Android-CleanArchitecture-Kotlin/architecture/clean_architecture_reloaded_layers.png)
+
+## Application Component migration
+
+
+## Modules migration
+
+
+## ViewModelFactory migration
+
+
+## AndroidX update
+
+
+## AndroidX update
+
+
+
 
 <a href="https://www.buymeacoffee.com/DSbMElGNU" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
