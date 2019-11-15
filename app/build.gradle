@@ -35,6 +35,10 @@ android {
     disable 'IconDensities'             //For testing purpose. This is safe to remove.
     disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
   }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
 
   signingConfigs {
     debug {

@@ -17,9 +17,20 @@ package com.fernandocejas.sample.core.extension
 
 import android.content.Context
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.fernandocejas.sample.core.platform.BaseActivity
 import com.fernandocejas.sample.core.platform.BaseFragment
 import kotlinx.android.synthetic.main.activity_layout.*
+
+
+inline fun <reified T : ViewModel> Fragment.viewModel(factory: ViewModelProvider.Factory, body: T.() -> Unit): T {
+    val vm = ViewModelProviders.of(this, factory)[T::class.java]
+    vm.body()
+    return vm
+}
 
 fun BaseFragment.close() = fragmentManager?.popBackStack()
 

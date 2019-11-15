@@ -26,7 +26,6 @@ import com.fernandocejas.sample.core.platform.BaseFragment
 import com.fernandocejas.sample.features.movies.MovieFailure.NonExistentMovie
 import kotlinx.android.synthetic.main.fragment_movie_details.*
 import kotlinx.android.synthetic.main.toolbar.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import javax.inject.Inject
 
 class MovieDetailsFragment : BaseFragment() {

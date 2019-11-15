@@ -23,30 +23,33 @@ import android.view.View
 import android.widget.ImageView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.FragmentActivity
+import com.fernandocejas.sample.core.extension.empty
 import com.fernandocejas.sample.features.login.Authenticator
 import com.fernandocejas.sample.features.login.LoginActivity
 import com.fernandocejas.sample.features.movies.MovieDetailsActivity
 import com.fernandocejas.sample.features.movies.MovieView
 import com.fernandocejas.sample.features.movies.MoviesActivity
-import com.fernandocejas.sample.core.extension.empty
-import javax.inject.Inject
-import javax.inject.Singleton
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
+class Navigator(private val context: Context) : KoinComponent {
 
-@Singleton
-class Navigator
-@Inject constructor(private val authenticator: Authenticator) {
+    val authenticator: Authenticator by inject()
 
-    private fun showLogin(context: Context) = context.startActivity(LoginActivity.callingIntent(context))
+    private fun showLogin() = context.startActivity(LoginActivity.callingIntent(context))
 
-    fun showMain(context: Context) {
+    fun showMain() {
         when (authenticator.userLoggedIn()) {
-            true -> showMovies(context)
-            false -> showLogin(context)
+            true -> showMovies()
+            false -> showLogin()
         }
     }
 
-    private fun showMovies(context: Context) = context.startActivity(MoviesActivity.callingIntent(context))
+    private fun showMovies() {
+        val intent = MoviesActivity.callingIntent(context)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        return context.startActivity(intent)
+    }
 
     fun showMovieDetails(activity: FragmentActivity, movie: MovieView, navigationExtras: Extras) {
         val intent = MovieDetailsActivity.callingIntent(activity, movie)
@@ -59,7 +62,7 @@ class Navigator
     private val VIDEO_URL_HTTP = "http://www.youtube.com/watch?v="
     private val VIDEO_URL_HTTPS = "https://www.youtube.com/watch?v="
 
-    fun openVideo(context: Context, videoUrl: String) {
+    fun openVideo(videoUrl: String) {
         try {
             context.startActivity(createYoutubeIntent(videoUrl))
         } catch (ex: ActivityNotFoundException) {

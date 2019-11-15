@@ -19,26 +19,23 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.fernandocejas.sample.core.platform.BaseFragment
 import com.fernandocejas.sample.R
-import com.fernandocejas.sample.features.movies.MovieFailure.ListNotAvailable
 import com.fernandocejas.sample.core.exception.Failure
 import com.fernandocejas.sample.core.exception.Failure.NetworkConnection
 import com.fernandocejas.sample.core.exception.Failure.ServerError
-import com.fernandocejas.sample.core.extension.failure
-import com.fernandocejas.sample.core.extension.invisible
-import com.fernandocejas.sample.core.extension.observe
-import com.fernandocejas.sample.core.extension.visible
+import com.fernandocejas.sample.core.extension.*
 import com.fernandocejas.sample.core.navigation.Navigator
-import kotlinx.android.synthetic.main.fragment_movies.emptyView
-import kotlinx.android.synthetic.main.fragment_movies.movieList
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.fernandocejas.sample.core.platform.BaseFragment
+import com.fernandocejas.sample.features.movies.MovieFailure.ListNotAvailable
+import kotlinx.android.synthetic.main.fragment_movies.*
 import javax.inject.Inject
 
 class MoviesFragment : BaseFragment() {
 
-    @Inject lateinit var navigator: Navigator
-    @Inject lateinit var moviesAdapter: MoviesAdapter
+    @Inject
+    lateinit var navigator: Navigator
+    @Inject
+    lateinit var moviesAdapter: MoviesAdapter
 
     private lateinit var moviesViewModel: MoviesViewModel
 
@@ -63,7 +60,8 @@ class MoviesFragment : BaseFragment() {
         movieList.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
         movieList.adapter = moviesAdapter
         moviesAdapter.clickListener = { movie, navigationExtras ->
-                    navigator.showMovieDetails(activity!!, movie, navigationExtras) }
+            navigator.showMovieDetails(activity!!, movie, navigationExtras)
+        }
     }
 
     private fun loadMoviesList() {
