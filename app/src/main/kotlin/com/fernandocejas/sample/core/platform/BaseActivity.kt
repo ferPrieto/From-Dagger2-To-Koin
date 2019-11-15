@@ -33,7 +33,7 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(layout.activity_layout)
         setSupportActionBar(toolbar)
-        //addFragment(savedInstanceState)
+        addFragment(savedInstanceState)
     }
 
     override fun onBackPressed() {
@@ -42,9 +42,9 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    /*private fun addFragment(savedInstanceState: Bundle?) =
+    private fun addFragment(savedInstanceState: Bundle?) =
             savedInstanceState ?: supportFragmentManager.beginTransaction().add(
-                    id.fragmentContainer, fragment())*/
+                    id.fragmentContainer, fragment()).commit()
 
     abstract fun fragment(): BaseFragment
 }

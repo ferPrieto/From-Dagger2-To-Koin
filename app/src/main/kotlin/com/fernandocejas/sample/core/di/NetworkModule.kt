@@ -2,7 +2,10 @@ package com.fernandocejas.sample.core.di
 
 import com.fernandocejas.sample.BuildConfig
 import com.fernandocejas.sample.core.platform.NetworkHandler
+import com.fernandocejas.sample.features.movies.MoviesApi
 import com.fernandocejas.sample.features.movies.MoviesRepository
+import com.fernandocejas.sample.features.movies.MoviesService
+import com.fernandocejas.sample.features.movies.Network
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,7 +36,12 @@ val networkModule = module {
 
     single { GsonBuilder().create() }
 
-    single { MoviesRepository.Network(get(), get()) }
+    single(override = true) { Network() as MoviesRepository }
 
     single { NetworkHandler(get()) }
+
+    factory { MoviesService(get())  }
+
+    factory(override = true) { get<Retrofit>().create(MoviesApi::class.java) }
+
 }

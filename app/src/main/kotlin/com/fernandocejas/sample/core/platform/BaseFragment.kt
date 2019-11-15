@@ -28,7 +28,7 @@ import com.fernandocejas.sample.core.extension.appContext
 import com.fernandocejas.sample.core.extension.viewContainer
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.toolbar.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 /**
  * Base Fragment class with helper methods for handling views and back button events.
@@ -39,12 +39,7 @@ abstract class BaseFragment : Fragment() {
 
     abstract fun layoutId(): Int
 
-    /*  val appComponent: ApplicationComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
-          (activity?.application as AndroidApplication).appComponent
-      }*/
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    val viewModelFactory: ViewModelProvider.Factory by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
             inflater.inflate(layoutId(), container, false)

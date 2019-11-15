@@ -17,18 +17,24 @@ package com.fernandocejas.sample.features.movies
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import com.fernandocejas.sample.R
 import com.fernandocejas.sample.core.exception.Failure
 import com.fernandocejas.sample.core.exception.Failure.NetworkConnection
 import com.fernandocejas.sample.core.exception.Failure.ServerError
-import com.fernandocejas.sample.core.extension.*
+import com.fernandocejas.sample.core.extension.close
+import com.fernandocejas.sample.core.extension.isVisible
+import com.fernandocejas.sample.core.extension.loadFromUrl
+import com.fernandocejas.sample.core.extension.loadUrlAndPostponeEnterTransition
 import com.fernandocejas.sample.core.platform.BaseFragment
 import com.fernandocejas.sample.features.movies.MovieFailure.NonExistentMovie
 import kotlinx.android.synthetic.main.fragment_movie_details.*
 import kotlinx.android.synthetic.main.toolbar.*
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class MovieDetailsFragment : BaseFragment() {
+class MovieDetailsFragment : BaseFragment(), KoinComponent {
 
     companion object {
         private const val PARAM_MOVIE = "param_movie"
@@ -43,10 +49,17 @@ class MovieDetailsFragment : BaseFragment() {
         }
     }
 
-    @Inject
-    lateinit var movieDetailsAnimator: MovieDetailsAnimator
+    private val movieDetailsAnimator: MovieDetailsAnimator by inject()
 
-    private lateinit var movieDetailsViewModel: MovieDetailsViewModel
+    private val movieDetailsViewModel by viewModel<MovieDetailsViewModel>()
+
+    private val successObserver = Observer<MovieDetailsView> { movieDetailsView ->
+        renderMovieDetails(movieDetailsView)
+    }
+
+    private val failureObserver = Observer<Failure> { failure ->
+        handleFailure(failure)
+    }
 
     override fun layoutId() = R.layout.fragment_movie_details
 
@@ -54,11 +67,14 @@ class MovieDetailsFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         activity?.let { movieDetailsAnimator.postponeEnterTransition(it) }
 
-        movieDetailsViewModel = viewModel(viewModelFactory) {
-            observe(movieDetails, ::renderMovieDetails)
-            failure(failure, ::handleFailure)
-        }
+        setObservers()
     }
+
+    private fun setObservers() {
+        movieDetailsViewModel.movieDetails.observe(this, successObserver)
+        movieDetailsViewModel.failure.observe(this, failureObserver)
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

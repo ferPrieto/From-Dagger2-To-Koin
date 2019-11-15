@@ -16,7 +16,6 @@
 package com.fernandocejas.sample
 
 import android.app.Application
-import com.fernandocejas.sample.core.di.apiModule
 import com.fernandocejas.sample.core.di.appModule
 import com.fernandocejas.sample.core.di.networkModule
 import com.fernandocejas.sample.core.di.viewModelModule
@@ -28,7 +27,7 @@ class AndroidApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        startKoin(this, listOf(appModule,viewModelModule, networkModule, apiModule))
+        startKoin(this, listOf(appModule,viewModelModule, networkModule))
         this.initializeLeakDetection()
     }
 

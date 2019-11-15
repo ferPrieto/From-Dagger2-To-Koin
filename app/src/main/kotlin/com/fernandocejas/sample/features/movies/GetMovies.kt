@@ -17,10 +17,12 @@ package com.fernandocejas.sample.features.movies
 
 import com.fernandocejas.sample.core.interactor.UseCase
 import com.fernandocejas.sample.core.interactor.UseCase.None
-import javax.inject.Inject
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class GetMovies
-@Inject constructor(private val moviesRepository: MoviesRepository) : UseCase<List<Movie>, None>() {
+class GetMovies : UseCase<List<Movie>, None>(), KoinComponent {
+
+    private val moviesRepository: MoviesRepository by inject()
 
     override suspend fun run(params: None) = moviesRepository.movies()
 }

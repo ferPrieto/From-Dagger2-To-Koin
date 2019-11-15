@@ -1,15 +1,20 @@
 package com.fernandocejas.sample.core.di
 
-import com.fernandocejas.sample.core.di.viewmodel.ViewModelFactory
-import com.fernandocejas.sample.features.movies.MovieDetailsViewModel
-import com.fernandocejas.sample.features.movies.MoviesViewModel
+import com.fernandocejas.sample.features.movies.*
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
 val viewModelModule = module {
-    viewModel { MoviesViewModel(get()) }
+    viewModel { MoviesViewModel() }
 
-    viewModel { MovieDetailsViewModel(get(), get()) }
+    viewModel { MovieDetailsViewModel() }
 
-    factory { ViewModelFactory(get()) }
+    single { GetMovieDetails() }
+
+    single { PlayMovie() }
+
+    single { MoviesAdapter() }
+
+    single { GetMovies() }
+
 }

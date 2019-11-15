@@ -32,11 +32,12 @@ import com.fernandocejas.sample.features.movies.MoviesActivity
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
+private const val VIDEO_URL_HTTP = "http://www.youtube.com/watch?v="
+private const val VIDEO_URL_HTTPS = "https://www.youtube.com/watch?v="
+
 class Navigator(private val context: Context) : KoinComponent {
 
-    val authenticator: Authenticator by inject()
-
-    private fun showLogin() = context.startActivity(LoginActivity.callingIntent(context))
+    private val authenticator: Authenticator by inject()
 
     fun showMain() {
         when (authenticator.userLoggedIn()) {
@@ -45,11 +46,9 @@ class Navigator(private val context: Context) : KoinComponent {
         }
     }
 
-    private fun showMovies() {
-        val intent = MoviesActivity.callingIntent(context)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        return context.startActivity(intent)
-    }
+    private fun showMovies() = context.startNewActivity(MoviesActivity.callingIntent(context))
+
+    private fun showLogin() = context.startNewActivity(LoginActivity.callingIntent(context))
 
     fun showMovieDetails(activity: FragmentActivity, movie: MovieView, navigationExtras: Extras) {
         val intent = MovieDetailsActivity.callingIntent(activity, movie)
@@ -58,9 +57,6 @@ class Navigator(private val context: Context) : KoinComponent {
                 .makeSceneTransitionAnimation(activity, sharedView, sharedView.transitionName)
         activity.startActivity(intent, activityOptions.toBundle())
     }
-
-    private val VIDEO_URL_HTTP = "http://www.youtube.com/watch?v="
-    private val VIDEO_URL_HTTPS = "https://www.youtube.com/watch?v="
 
     fun openVideo(videoUrl: String) {
         try {
@@ -79,11 +75,14 @@ class Navigator(private val context: Context) : KoinComponent {
 
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$videoId"))
         intent.putExtra("force_fullscreen", true)
-
-        if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.M)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
         return intent
+    }
+
+    private fun Context.startNewActivity(intent: Intent) {
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        return context.startActivity(intent)
     }
 
     class Extras(val transitionSharedElement: View)

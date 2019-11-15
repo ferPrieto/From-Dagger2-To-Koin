@@ -18,36 +18,47 @@ package com.fernandocejas.sample.features.movies
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fernandocejas.sample.R
 import com.fernandocejas.sample.core.exception.Failure
 import com.fernandocejas.sample.core.exception.Failure.NetworkConnection
 import com.fernandocejas.sample.core.exception.Failure.ServerError
-import com.fernandocejas.sample.core.extension.*
+import com.fernandocejas.sample.core.extension.invisible
+import com.fernandocejas.sample.core.extension.visible
 import com.fernandocejas.sample.core.navigation.Navigator
 import com.fernandocejas.sample.core.platform.BaseFragment
 import com.fernandocejas.sample.features.movies.MovieFailure.ListNotAvailable
 import kotlinx.android.synthetic.main.fragment_movies.*
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class MoviesFragment : BaseFragment() {
+class MoviesFragment : BaseFragment(), KoinComponent {
 
-    @Inject
-    lateinit var navigator: Navigator
-    @Inject
-    lateinit var moviesAdapter: MoviesAdapter
+    private val navigator: Navigator by inject()
+    private val moviesAdapter: MoviesAdapter by inject()
 
-    private lateinit var moviesViewModel: MoviesViewModel
+    private val moviesViewModel by viewModel<MoviesViewModel>()
+
+    private val successObserver = Observer<List<MovieView>> { movieViews ->
+        renderMoviesList(movieViews)
+    }
+
+    private val failureObserver = Observer<Failure> { failure ->
+        handleFailure(failure)
+    }
 
     override fun layoutId() = R.layout.fragment_movies
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setObservers()
+    }
 
-        moviesViewModel = viewModel(viewModelFactory) {
-            observe(movies, ::renderMoviesList)
-            failure(failure, ::handleFailure)
-        }
+    private fun setObservers() {
+        moviesViewModel.movies.observe(this, successObserver)
+        moviesViewModel.failure.observe(this, failureObserver)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,16 +75,16 @@ class MoviesFragment : BaseFragment() {
         }
     }
 
+    private fun renderMoviesList(movies: List<MovieView>?) {
+        moviesAdapter.collection = movies.orEmpty()
+        hideProgress()
+    }
+
     private fun loadMoviesList() {
         emptyView.invisible()
         movieList.visible()
         showProgress()
         moviesViewModel.loadMovies()
-    }
-
-    private fun renderMoviesList(movies: List<MovieView>?) {
-        moviesAdapter.collection = movies.orEmpty()
-        hideProgress()
     }
 
     private fun handleFailure(failure: Failure?) {

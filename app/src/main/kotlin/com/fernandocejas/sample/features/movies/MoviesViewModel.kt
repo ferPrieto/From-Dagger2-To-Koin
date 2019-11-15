@@ -18,10 +18,12 @@ package com.fernandocejas.sample.features.movies
 import androidx.lifecycle.MutableLiveData
 import com.fernandocejas.sample.core.interactor.UseCase.None
 import com.fernandocejas.sample.core.platform.BaseViewModel
-import javax.inject.Inject
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class MoviesViewModel @Inject constructor(private val getMovies: GetMovies) : BaseViewModel() {
+class MoviesViewModel : BaseViewModel(), KoinComponent {
 
+    val getMovies: GetMovies by inject()
     var movies: MutableLiveData<List<MovieView>> = MutableLiveData()
 
     fun loadMovies() = getMovies(None()) { it.either(::handleFailure, ::handleMovieList) }
