@@ -13,7 +13,7 @@ import org.koin.dsl.module.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-val networkModule = module {
+val dataModule = module {
 
     single {
         OkHttpClient.Builder().apply {
@@ -35,8 +35,6 @@ val networkModule = module {
     }
 
     single { GsonBuilder().create() }
-
-    single(override = true) { Network() as MoviesRepository }
 
     single { NetworkHandler(get()) }
 

@@ -8,9 +8,4 @@ import org.koin.dsl.module.module
 
 val appModule = module {
     factory { Navigator(androidApplication()) }
-
-    single { Authenticator() }
-
-    single { MovieDetailsAnimator() }
-
 }

@@ -25,8 +25,8 @@ import com.fernandocejas.sample.features.movies.PlayMovie.Params
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
-class PlayMovie() : UseCase<None, Params>(), KoinComponent {
-    val navigator: Navigator by inject()
+class PlayMovie : UseCase<None, Params>(), KoinComponent {
+    private val navigator: Navigator by inject()
 
     override suspend fun run(params: Params): Either<Failure, None> {
         navigator.openVideo(params.url)
