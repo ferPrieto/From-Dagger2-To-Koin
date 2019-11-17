@@ -8,6 +8,7 @@ This is a Dagger to [Koin][1] migration approach from Fernando Cejas's repositor
 ## Android 3 Layers Architecture and DI setup
 
 Based on these three layers, I have created three modules for `Presentation`, `Domain` and `Data`. Also an additional `AppModule`
+
 ![https://fernandocejas.com/2018/05/07/architecting-android-reloaded/](https://github.com/android10/Sample-Data/blob/master/Android-CleanArchitecture-Kotlin/architecture/clean_architecture_reloaded_layers.png)
 
 ##  DI ApplicationComponent migration
@@ -61,7 +62,7 @@ As I explained in the beginning of the document, I have created three different 
 
 In order to show how much more concise and less verbose Koin is, I am going to show the `ViewModelModule` (original) and `PresentationModule` (koin version).
 
-###Dagger2
+### Dagger2
 ```
 @Module
 abstract class ViewModelModule {
@@ -80,7 +81,7 @@ abstract class ViewModelModule {
 }
 ```
 
-###Koin
+### Koin
 
 As you can see `ViewModelFactory` is not necessary any more, since Koin gives you the VM support (more info in `ViewModelFactory migration` section).
 I have included other UI related classes (`MoviesAdapter`, `MovieDetailsAnimator`) and another one related to the VM (`Authenticator`).
@@ -129,6 +130,12 @@ private val failureObserver = Observer<Failure> { failure ->
 ## AndroidX update
 
 I have updated the main Android libraries, as I wanted to show this project updated to the lastest standards and APIs possible.
+
+## Branches
+
+Dagger2 - The original code base
+
+Koin - The entire project modified with these dependency injection library changes
 
 
 <a href="https://www.buymeacoffee.com/DSbMElGNU" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
