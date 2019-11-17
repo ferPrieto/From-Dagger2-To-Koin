@@ -16,11 +16,10 @@
 package com.fernandocejas.sample.core.platform
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.fernandocejas.sample.R.id
 import com.fernandocejas.sample.R.layout
-import com.fernandocejas.sample.core.extension.inTransaction
-import kotlinx.android.synthetic.main.toolbar.toolbar
+import kotlinx.android.synthetic.main.toolbar.*
 
 /**
  * Base Activity class with helper methods for handling fragment transactions and back button
@@ -44,8 +43,8 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun addFragment(savedInstanceState: Bundle?) =
-            savedInstanceState ?: supportFragmentManager.inTransaction { add(
-                    id.fragmentContainer, fragment()) }
+            savedInstanceState ?: supportFragmentManager.beginTransaction().add(
+                    id.fragmentContainer, fragment()).commit()
 
     abstract fun fragment(): BaseFragment
 }

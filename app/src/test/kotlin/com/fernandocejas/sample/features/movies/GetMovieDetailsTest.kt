@@ -31,14 +31,17 @@ class GetMovieDetailsTest : UnitTest() {
 
     private lateinit var getMovieDetails: GetMovieDetails
 
-    @Mock private lateinit var moviesRepository: MoviesRepository
+    @Mock
+    private lateinit var moviesRepository: MoviesRepository
 
-    @Before fun setUp() {
-        getMovieDetails = GetMovieDetails(moviesRepository)
+    @Before
+    fun setUp() {
+        getMovieDetails = GetMovieDetails()
         given { moviesRepository.movieDetails(MOVIE_ID) }.willReturn(Right(MovieDetails.empty()))
     }
 
-    @Test fun `should get data from repository`() {
+    @Test
+    fun `should get data from repository`() {
         runBlocking { getMovieDetails.run(GetMovieDetails.Params(MOVIE_ID)) }
 
         verify(moviesRepository).movieDetails(MOVIE_ID)

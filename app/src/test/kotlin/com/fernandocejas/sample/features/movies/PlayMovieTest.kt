@@ -30,17 +30,20 @@ class PlayMovieTest : AndroidTest() {
 
     private val context = context()
 
-    @Mock private lateinit var navigator: Navigator
+    @Mock
+    private lateinit var navigator: Navigator
 
-    @Before fun setUp() {
-        playMovie = PlayMovie(context, navigator)
+    @Before
+    fun setUp() {
+        playMovie = PlayMovie()
     }
 
-    @Test fun `should play movie trailer`() {
+    @Test
+    fun `should play movie trailer`() {
         val params = PlayMovie.Params(VIDEO_URL)
 
         playMovie(params)
 
-        verify(navigator).openVideo(context, VIDEO_URL)
+        verify(navigator).openVideo(VIDEO_URL)
     }
 }

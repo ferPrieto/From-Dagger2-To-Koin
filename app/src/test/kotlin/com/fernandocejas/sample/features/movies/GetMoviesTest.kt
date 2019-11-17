@@ -33,7 +33,7 @@ class GetMoviesTest : UnitTest() {
     @Mock private lateinit var moviesRepository: MoviesRepository
 
     @Before fun setUp() {
-        getMovies = GetMovies(moviesRepository)
+        getMovies = GetMovies()
         given { moviesRepository.movies() }.willReturn(Right(listOf(Movie.empty())))
     }
 

@@ -15,12 +15,14 @@
  */
 package com.fernandocejas.sample.features.movies
 
-import com.fernandocejas.sample.features.movies.GetMovieDetails.Params
 import com.fernandocejas.sample.core.interactor.UseCase
-import javax.inject.Inject
+import com.fernandocejas.sample.features.movies.GetMovieDetails.Params
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class GetMovieDetails
-@Inject constructor(private val moviesRepository: MoviesRepository) : UseCase<MovieDetails, Params>() {
+class GetMovieDetails : UseCase<MovieDetails, Params>(), KoinComponent {
+
+    private val moviesRepository: MoviesRepository by inject()
 
     override suspend fun run(params: Params) = moviesRepository.movieDetails(params.id)
 

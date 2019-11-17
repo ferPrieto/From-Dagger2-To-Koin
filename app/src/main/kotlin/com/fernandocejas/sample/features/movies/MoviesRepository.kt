@@ -22,41 +22,43 @@ import com.fernandocejas.sample.core.functional.Either
 import com.fernandocejas.sample.core.functional.Either.Left
 import com.fernandocejas.sample.core.functional.Either.Right
 import com.fernandocejas.sample.core.platform.NetworkHandler
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 import retrofit2.Call
-import javax.inject.Inject
 
-interface MoviesRepository {
+interface MoviesRepository : KoinComponent {
     fun movies(): Either<Failure, List<Movie>>
     fun movieDetails(movieId: Int): Either<Failure, MovieDetails>
+}
 
-    class Network
-    @Inject constructor(private val networkHandler: NetworkHandler,
-                        private val service: MoviesService) : MoviesRepository {
+class Network : MoviesRepository, KoinComponent {
 
-        override fun movies(): Either<Failure, List<Movie>> {
-            return when (networkHandler.isConnected) {
-                true -> request(service.movies(), { it.map { it.toMovie() } }, emptyList())
-                false, null -> Left(NetworkConnection)
-            }
+    private val networkHandler: NetworkHandler by inject()
+    private val service: MoviesService by inject()
+
+    override fun movies(): Either<Failure, List<Movie>> {
+        return when (networkHandler.isConnected) {
+            true -> request(service.movies(), { it.map { it.toMovie() } }, emptyList())
+            false, null -> Left(NetworkConnection)
         }
+    }
 
-        override fun movieDetails(movieId: Int): Either<Failure, MovieDetails> {
-            return when (networkHandler.isConnected) {
-                true -> request(service.movieDetails(movieId), { it.toMovieDetails() }, MovieDetailsEntity.empty())
-                false, null -> Left(NetworkConnection)
-            }
+    override fun movieDetails(movieId: Int): Either<Failure, MovieDetails> {
+        return when (networkHandler.isConnected) {
+            true -> request(service.movieDetails(movieId), { it.toMovieDetails() }, MovieDetailsEntity.empty())
+            false, null -> Left(NetworkConnection)
         }
+    }
 
-        private fun <T, R> request(call: Call<T>, transform: (T) -> R, default: T): Either<Failure, R> {
-            return try {
-                val response = call.execute()
-                when (response.isSuccessful) {
-                    true -> Right(transform((response.body() ?: default)))
-                    false -> Left(ServerError)
-                }
-            } catch (exception: Throwable) {
-                Left(ServerError)
+    private fun <T, R> request(call: Call<T>, transform: (T) -> R, default: T): Either<Failure, R> {
+        return try {
+            val response = call.execute()
+            when (response.isSuccessful) {
+                true -> Right(transform((response.body() ?: default)))
+                false -> Left(ServerError)
             }
+        } catch (exception: Throwable) {
+            Left(ServerError)
         }
     }
 }

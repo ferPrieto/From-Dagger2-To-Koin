@@ -15,6 +15,7 @@
  */
 package com.fernandocejas.sample.core.navigation
 
+import android.content.Context
 import com.fernandocejas.sample.AndroidTest
 import com.fernandocejas.sample.features.login.Authenticator
 import com.fernandocejas.sample.features.login.LoginActivity
@@ -31,25 +32,32 @@ class NavigatorTest : AndroidTest() {
 
     private lateinit var navigator: Navigator
 
-    @Mock private lateinit var authenticator: Authenticator
+    @Mock
+    private lateinit var context: Context
 
-    @Before fun setup() {
-        navigator = Navigator(authenticator)
+    @Mock
+    private lateinit var authenticator: Authenticator
+
+    @Before
+    fun setup() {
+        navigator = Navigator(context)
     }
 
-    @Test fun `should forward user to login screen`() {
+    @Test
+    fun `should forward user to login screen`() {
         whenever(authenticator.userLoggedIn()).thenReturn(false)
 
-        navigator.showMain(activityContext())
+        navigator.showMain()
 
         verify(authenticator).userLoggedIn()
         RouteActivity::class shouldNavigateTo LoginActivity::class
     }
 
-    @Test fun `should forward user to movies screen`() {
+    @Test
+    fun `should forward user to movies screen`() {
         whenever(authenticator.userLoggedIn()).thenReturn(true)
 
-        navigator.showMain(activityContext())
+        navigator.showMain()
 
         verify(authenticator).userLoggedIn()
         RouteActivity::class shouldNavigateTo MoviesActivity::class

@@ -35,6 +35,10 @@ android {
     disable 'IconDensities'             //For testing purpose. This is safe to remove.
     disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
   }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
 
   signingConfigs {
     debug {
@@ -71,8 +75,7 @@ dependencies {
   def developmentDependencies = rootProject.ext.development
 
   //Compile time dependencies
-  kapt applicationDependencies.archComponentsCompiler
-  kapt applicationDependencies.daggerCompiler
+  annotationProcessor applicationDependencies.archComponentsCompiler
   compileOnly applicationDependencies.javaxAnnotation
   compileOnly applicationDependencies.javaxInject
 
@@ -81,14 +84,17 @@ dependencies {
   implementation applicationDependencies.kotlinCoroutines
   implementation applicationDependencies.kotlinCoroutinesAndroid
   implementation applicationDependencies.appCompat
-  implementation applicationDependencies.constraintLayout
-  implementation applicationDependencies.archComponents
-  implementation applicationDependencies.cardView
   implementation applicationDependencies.recyclerView
-  implementation applicationDependencies.design
+  implementation applicationDependencies.constraintLayout
   implementation applicationDependencies.androidAnnotations
+  implementation applicationDependencies.archViewModel
+  implementation applicationDependencies.archComponents
+  implementation applicationDependencies.archComponentsCompiler
   implementation applicationDependencies.glide
-  implementation applicationDependencies.dagger
+  implementation applicationDependencies.koinAndroid
+  implementation applicationDependencies.koinCore
+  implementation applicationDependencies.koinViewmodel
+  implementation applicationDependencies.koinTest
   implementation applicationDependencies.retrofit
   implementation applicationDependencies.okhttpLoggingInterceptor
 
@@ -111,6 +117,7 @@ dependencies {
   debugImplementation developmentDependencies.leakCanary
   releaseImplementation developmentDependencies.leakCanaryNoop
   testImplementation developmentDependencies.leakCanaryNoop
+  implementation 'com.google.android.material:material:1.1.0-beta02'
 }
 
 kotlin {
