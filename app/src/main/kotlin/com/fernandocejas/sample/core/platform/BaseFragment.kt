@@ -22,13 +22,11 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.fernandocejas.sample.R.color
 import com.fernandocejas.sample.core.extension.appContext
 import com.fernandocejas.sample.core.extension.viewContainer
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.toolbar.*
-import org.koin.android.ext.android.inject
 
 /**
  * Base Fragment class with helper methods for handling views and back button events.
@@ -38,8 +36,6 @@ import org.koin.android.ext.android.inject
 abstract class BaseFragment : Fragment() {
 
     abstract fun layoutId(): Int
-
-    val viewModelFactory: ViewModelProvider.Factory by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
             inflater.inflate(layoutId(), container, false)
