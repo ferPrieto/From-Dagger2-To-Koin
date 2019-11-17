@@ -35,7 +35,7 @@ class MovieDetailsViewModelTest : AndroidTest() {
 
     @Before
     fun setUp() {
-        movieDetailsViewModel = MovieDetailsViewModel(getMovieDetails, playMovie)
+        movieDetailsViewModel = MovieDetailsViewModel()
     }
 
     @Test fun `loading movie details should update live data`() {

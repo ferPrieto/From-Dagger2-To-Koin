@@ -34,7 +34,7 @@ class MoviesViewModelTest : AndroidTest() {
 
     @Before
     fun setUp() {
-        moviesViewModel = MoviesViewModel(getMovies)
+        moviesViewModel = MoviesViewModel()
     }
 
     @Test fun `loading movies should update live data`() {
